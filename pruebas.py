@@ -10,5 +10,5 @@ tabla=soup.find_all('tr')
 for i in tabla:
     for a in i.find_all('td'):
         for z in i.find_all('th'):
-            print(z.text.replace(" ",""),"<----------->",a.text.replace("\n","").replace(" ",""))
+            print(" ".join( z.text.split()),"<----------->"," ".join( a.text.split()))
             
