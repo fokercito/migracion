@@ -18,6 +18,7 @@ for i in arrlinks:
             #nString=""
             #if (j >= chr(48)) and (j <= chr(57)):
              #   nString += j
-        numerosConsulta.append(i)
+            numerosConsulta.append(i.replace("https://www.siass.unam.mx/consulta/",""))
+            
 print(len(numerosConsulta))
 print(numerosConsulta)
