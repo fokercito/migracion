@@ -9,4 +9,6 @@ soup=bs.BeautifulSoup(r.data,'html.parser')
 tabla=soup.find_all('tr')
 for i in tabla:
     for a in i.find_all('td'):
-        print(a.text)
+        for z in i.find_all('th'):
+            print(z.text.replace(" ",""),"<----------->",a.text.replace("\n","").replace(" ",""))
+            
