@@ -17,10 +17,6 @@ print(arrlinks)
 numerosConsulta=[]
 for i in arrlinks:
     if("https://www.siass.unam.mx/consulta/" in i ):
-        #for j in i:
-            #nString=""
-            #if (j >= chr(48)) and (j <= chr(57)):
-             #   nString += j
             numerosConsulta.append(i.replace("https://www.siass.unam.mx/consulta/",""))
 """
 
@@ -29,13 +25,13 @@ linkstemp=[]
 linkstemporales=[]
 numerosConsulta=[]
 for i in arrlinks:
-    print("entre al arrlinks")
+    #print("entre al arrlinks")
     if("https://www.siass.unam.mx/consulta?" in i):
         linkstemp.append(i)
-print(linkstemp)
+#print(linkstemp)
 for x in linkstemp:
     linkstemporales.append(x.replace("https://www.siass.unam.mx/consulta?numero_cuenta=311004739&sistema_pertenece=dgae&facultad_id=6&carrera_id=55&page=", ""))
-print(linkstemporales)
+#print(linkstemporales)
 z = int(linkstemporales[1])
 linkstemporales[0] =0
 max = 0
@@ -44,7 +40,47 @@ for j in linkstemporales:
         max = int(j)
     if int(j)>max:
         max = int(j)
-print(max)
+#print(max)
+numerosConsulta=[]
+arregloDic=[]
+for e in range (2,max):
+    url='https://www.siass.unam.mx/consulta?numero_cuenta=311004739&sistema_pertenece=dgae&facultad_id=6&carrera_id=55&page='+ str(e)
+    r=http.request('GET',url)
+    r.status
+    soup=bs.BeautifulSoup(r.data,'html.parser')
+    link=soup.find_all('a')
+
+    arrlinks=[]
+    for i in link:
+        arrlinks.append(i['href'])
+    
+    for i in arrlinks:
+        if("https://www.siass.unam.mx/consulta/" in i ):
+                numerosConsulta.append(i.replace("https://www.siass.unam.mx/consulta/",""))
+
+    for r in numerosConsulta:            
+        url2='https://www.siass.unam.mx/consulta/' + r
+        r=http.request('GET',url2)
+        r.status
+        diccionario = {}
+        soup=bs.BeautifulSoup(r.data,'html.parser')
+        tabla=soup.find_all('tr')
+        f=open("diccionario.txt","w")
+        for i in tabla:
+            for a in i.find_all('td'):
+                for z in i.find_all('th'):
+                    print(" ".join( z.text.split()),"<----------->"," ".join( a.text.split()))
+                    llave= " ".join( z.text.split())
+                    valor = " ".join( a.text.split())
+                    diccionario[llave] = valor
+        arregloDic.append(diccionario)
+        f.write(str(diccionario) + "\n")
+        f.close()        
+print(arregloDic)
+f=open("listadiccionario.txt","a")
+f.write(arregloDic)
+f.close()
+#print(numerosConsulta)
 
 
 """
