@@ -4,12 +4,9 @@ import urllib3 #biblioteca para el uso de dominios y extraer el código html de 
 import pandas as pd #biblioteca para insertar tablas y datos en xls, json, sql
 import json #biblioteca para trabajar json en python
 import xlwt
+
 http=urllib3.PoolManager()
-<<<<<<< HEAD
 url='https://www.siass.unam.mx/consulta?numero_cuenta=416080317&sistema_pertenece=dgae&facultad_id=11&carrera_id=10'
-=======
-url='https://www.siass.unam.mx/consulta?numero_cuenta=311004739&sistema_pertenece=dgae&facultad_id=11&carrera_id=11'
->>>>>>> 5a4825c217ac0a65f117aec536aaea684f678f28
 r=http.request('GET',url)
 r.status
 soup=bs.BeautifulSoup(r.data,'html.parser')
@@ -28,11 +25,7 @@ for i in arrlinks:
         linkstemp.append(i)
 #print(linkstemp)
 for x in linkstemp:
-<<<<<<< HEAD
     linkstemporales.append(x.replace("https://www.siass.unam.mx/consulta?numero_cuenta=416080317&sistema_pertenece=dgae&facultad_id=11&carrera_id=10&page=", ""))#reemplazamos todo el url para obtener solo el número de la página a la que va el link
-=======
-    linkstemporales.append(x.replace("https://www.siass.unam.mx/consulta?numero_cuenta=311004739&sistema_pertenece=dgae&facultad_id=11&carrera_id=11&page=", ""))#reemplazamos todo el url para obtener solo el número de la página a la que va el link
->>>>>>> 5a4825c217ac0a65f117aec536aaea684f678f28
 #en las siguientes líneas de código determinamos el número de páginas obteniento el mayor en la lista "linkstemporales"
 z = int(linkstemporales[1])
 linkstemporales[0] =0
@@ -48,11 +41,7 @@ arregloDic=[] #aquí guardaremos los diccionarios que se generarán en el webscr
 contenedorxl = pd.ExcelWriter('pruebaexcelxlsx', engine='xlsxwriter')
 for e in range (2,max):#recorremos todas la pestañas de la pagina del siass
     #sobreescribiremos nuestras variables, ya que obtuvimos lo necesario para recorrer la página
-<<<<<<< HEAD
     url='https://www.siass.unam.mx/consulta?numero_cuenta=416080317&sistema_pertenece=dgae&facultad_id=11&carrera_id=10&page='+ str(e)
-=======
-    url='https://www.siass.unam.mx/consulta?numero_cuenta=311004739&sistema_pertenece=dgae&facultad_id=11&carrera_id=11&page='+ str(e)
->>>>>>> 5a4825c217ac0a65f117aec536aaea684f678f28
     r=http.request('GET',url)
     r.status
     soup=bs.BeautifulSoup(r.data,'html.parser')
@@ -86,7 +75,6 @@ for r in numerosConsulta:#recorremos la descripción de todos los servicios soci
     arregloDic.append(diccionario)
     f.write(str(diccionario) + "\n")
     f.close()        
-<<<<<<< HEAD
 toJson = json.dumps(arregloDic)
 dfPrueba = pd.read_json(toJson)
 dfPrueba.to_excel('output.xls', index=False)
@@ -96,8 +84,3 @@ g.close()
 contenedorxl.save()
 
 #Desde aqui haremos la prueba de la migracion a la tabla desde el diccionario
-=======
-"""f=open("listadiccionario.txt","a",encoding="utf8")
-f.write(str(arregloDic)
-f.close()"""
->>>>>>> 5a4825c217ac0a65f117aec536aaea684f678f28
