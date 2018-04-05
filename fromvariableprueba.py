@@ -44,6 +44,22 @@ def recolectarrep(noCuenta,idCarrera):
     numerosConsulta=[]#aquí guardaremos todos lor número de consulta (es decir los últimos numeros de los links que contienen la descripción de los servicios)
     arregloDic=[] #aquí guardaremos los diccionarios que se generarán en el webscraping
     contenedorxl = pd.ExcelWriter('pruebaexcelxlsx', engine='xlsxwriter')
+########################3
+    url='https://www.siass.unam.mx/consulta?numero_cuenta='+noCuenta+'&sistema_pertenece=dgae&facultad_id=11&carrera_id='+idCarrera
+    r=http.request('GET',url)
+    r.status
+    soup=bs.BeautifulSoup(r.data,'html.parser')
+    link=soup.find_all('a')#obtenemos todas las etiquetas <a> de html
+    arrlinks=[]
+    for i in link:
+        arrlinks.append(i['href']) #obtenemos todos los links en las etiquetas <a>
+    
+    for i in arrlinks:
+        if("https://www.siass.unam.mx/consulta/" in i ):
+                numerosConsulta.append(i.replace("https://www.siass.unam.mx/consulta/",""))#obtenemos solo los números
+
+#########################
+
     for e in range (2,max):#recorremos todas la pestañas de la pagina del siass
         #sobreescribiremos nuestras variables, ya que obtuvimos lo necesario para recorrer la página
         url='https://www.siass.unam.mx/consulta?numero_cuenta='+noCuenta+'&sistema_pertenece=dgae&facultad_id=11&carrera_id='+idCarrera+'&page='+ str(e)
