@@ -21,6 +21,7 @@ for archivo in arregloArchivos:
         links = soup.find_all('li')#encuentra todas las etiquetas li
         divs = soup.find_all("div",{"id":re.compile('carrera_*')})#todas la etiquetas con un id que inicie con carrera
         dias = soup.find_all('label', {"class":"btn btn-success disabled"})#saca los dias y los turnos del servicio social
+        tablaActividades = soup.find_all('table',{ "class":"table table-striped table-bordered"})#actividades de servicio social
         for a in dias:
             diccionario[a.text.replace(" ","").replace("\n","")]="x"
         for i in links:
@@ -28,6 +29,13 @@ for archivo in arregloArchivos:
                 for j in divs:
                     for b in j.find_all('p',{"class":"alert alert-info"}):
                         diccionario[(a.text.replace("  ","").replace("\n",""))] = (b.text.replace("  ","").replace("\n",""))#crea un elemento del diccionario con el contenido de la etiqueta de la carrera y la etiqueta que contiene los prestadores
+                    for b in tablaActividades:#iniciamos a leer las actividades
+                        columna = b.find_all('td',{"style":"padding-left: 20px;"})
+                        texto = ""
+                        for c in columna:
+                            texto = texto + c.text.replace("  ","").replace("\n\n","") 
+                            diccionario["Actividad " +(a.text.replace("  ","").replace("\n",""))] = texto
+                        
         for i in tabla:#creamos y llenamos un diccionario con el contenido de las tablas
             for a in i.find_all('td'):
                 for z in i.find_all('th'):
