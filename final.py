@@ -7,7 +7,7 @@ import xlwt #biblioteca para crear archivos de excel
 import re #para permitir el uso de expresiones regulares
 from tkinter import * #interfaz grafica
 from tkinter.filedialog import * #explorador de archivos
-import time
+from datetime import date
 #9 para electricos
 #10 para computacion
 #11 para telecomunicaciones
@@ -36,7 +36,7 @@ class main:
         self.logf.pack()
     
     def recolectarrep(self):
-        localtime = time.asctime( time.localtime(time.time()) )
+        localtime = str(date.today())
         urllib3.disable_warnings()
         if self.capturaCarrera.get() == "Computacion":
             self.carrera.set('10')
@@ -134,7 +134,7 @@ class main:
         if self.carrera.get() == "10":
             dfPrueba.to_excel( rutadeldirectorio+'/programascompu'+ localtime+'.xls', index=False)
         elif self.carrera.get() == '11':
-            dfPrueba.to_excel( rutadeldirectorio+'/programastelecom'+localtime+'.xls', index=False)
+            dfPrueba.to_excel( rutadeldirectorio+'/programastelecom'+localtime +'.xls', index=False)
         elif self.carrera.get() == '9':
             dfPrueba.to_excel( rutadeldirectorio+'/programaselectr'+localtime+'.xls', index=False)
         contenedorxl.save()
